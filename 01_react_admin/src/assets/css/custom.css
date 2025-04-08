@@ -1,0 +1,227 @@
+/* Tambahan CSS untuk meningkatkan estetika */
+
+/* Card styling */
+
+.btn-action {
+  margin-right: 5px;
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-action i {
+  margin-right: 4px;
+}
+
+.event-list thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.event-list tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: all 0.2s;
+}
+
+.modal-event-detail .modal-content {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card {
+  transition: all 0.2s;
+  border-radius: 8px;
+}
+
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
+/* Table styling */
+.event-list {
+  margin-bottom: 0;
+}
+
+.event-list thead th {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.event-list tbody tr {
+  vertical-align: middle;
+}
+
+/* Button styling */
+.btn-action {
+  margin-right: 5px;
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-action i {
+  margin-right: 4px;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+}
+
+/* Tab styling for modal */
+.nav-pills .nav-link {
+  border-radius: 0;
+  padding: 15px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #fff;
+  color: #3f4d67;
+  border-bottom: 3px solid #4099ff;
+}
+
+/* Image gallery styling */
+.photo-thumbnail {
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-thumbnail img {
+  transition: transform 0.3s ease;
+}
+
+.photo-thumbnail:hover img {
+  transform: scale(1.05);
+}
+
+/* Modal styling */
+.modal-event-detail .modal-content {
+  border: none;
+  overflow: hidden;
+}
+
+.modal-90w {
+  max-width: 90%;
+}
+
+/* Badge styling */
+.badge {
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-action {
+  margin-right: 5px;
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-action i {
+  margin-right: 4px;
+}
+
+.event-list thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.event-list tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: all 0.2s;
+}
+
+.modal-event-detail .modal-content {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Improved Modal Styling */
+.fancy-modal .modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.fancy-modal .modal-header {
+  background: linear-gradient(45deg, #4099ff, #73b4ff);
+  border-bottom: none;
+  color: white;
+  padding: 20px 25px;
+}
+
+.fancy-modal .modal-footer {
+  border-top: none;
+  padding: 15px 25px 20px;
+}
+
+.fancy-modal .modal-body {
+  padding: 25px;
+}
+
+.fancy-modal .form-group {
+  margin-bottom: 20px;
+}
+
+.fancy-modal .form-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.fancy-modal .form-control,
+.fancy-modal .react-datepicker-wrapper {
+  border-radius: 8px;
+  border-color: #e0e0e0;
+  padding: 10px 15px;
+  transition: all 0.2s;
+}
+
+.fancy-modal .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(64, 153, 255, 0.25);
+  border-color: #4099ff;
+}
+
+.fancy-modal .btn-primary {
+  background: linear-gradient(45deg, #4099ff, #73b4ff);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(64, 153, 255, 0.3);
+  transition: all 0.2s;
+}
+
+.fancy-modal .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(64, 153, 255, 0.4);
+}
+
+.fancy-modal .btn-secondary {
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-weight: 500;
+}
+
