@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { DollarSign } from "lucide-react"
 import { StatCard } from "@/components/dashboard/stat-card"
+import { financeApi, USE_FALLBACK_DATA } from "@/lib/api"
+import { apiClient } from "@/lib/api-client"
 import axios from "axios"
 
 export function RealFinance() {
@@ -17,85 +19,38 @@ export function RealFinance() {
     const fetchFinanceSummary = async () => {
       try {
         setIsLoading(true)
+        console.log('Fetching finance summary, USE_FALLBACK_DATA:', USE_FALLBACK_DATA)
 
-        // Get token from localStorage
-        const token = localStorage.getItem('token')
+        // Use our API client instead of direct axios calls
+        const summary = await financeApi.getFinanceSummary()
+        console.log('Fetched finance summary:', summary)
 
-        try {
-          // Try the correct endpoint for finance summary
-          const response = await axios.get('https://backend-project-pemuda.onrender.com/api/v1/finance/summary', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-
-          const summary = response.data
-
-          setFinanceSummary({
-            total_income: summary.total_income || "0",
-            total_expense: summary.total_expense || "0",
-            current_balance: summary.current_balance || "0"
-          })
-
-          console.log('Fetched real finance summary:', summary)
-        } catch (apiError) {
-          console.error('Error with first endpoint, trying alternative:', apiError)
-
-          // Try alternative endpoint
-          try {
-            const alternativeResponse = await axios.get('https://backend-project-pemuda.onrender.com/api/v1/finances', {
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
-            })
-
-            const data = alternativeResponse.data
-            console.log('Fetched alternative finance data:', data)
-
-            // If we have transactions, calculate summary
-            if (Array.isArray(data)) {
-              const income = data
-                .filter(item => item.category === 'Pemasukan')
-                .reduce((sum, item) => sum + parseFloat(item.amount), 0)
-
-              const expense = data
-                .filter(item => item.category === 'Pengeluaran')
-                .reduce((sum, item) => sum + parseFloat(item.amount), 0)
-
-              const balance = income - expense
-
-              setFinanceSummary({
-                total_income: income.toString(),
-                total_expense: expense.toString(),
-                current_balance: balance.toString()
-              })
-
-              console.log('Calculated finance summary from transactions:', { income, expense, balance })
-            }
-          } catch (alternativeError) {
-            console.error('Error with alternative endpoint:', alternativeError)
-            // Use fallback data
-            const fallbackSummary = {
-              total_income: "20000",
-              total_expense: "5000",
-              current_balance: "15000"
-            }
-
-            setFinanceSummary(fallbackSummary)
-            console.log('Using fallback finance summary:', fallbackSummary)
-          }
-        }
+        setFinanceSummary({
+          total_income: summary.total_income || "0",
+          total_expense: summary.total_expense || "0",
+          current_balance: summary.current_balance || "0"
+        })
       } catch (error) {
-        console.error('Error in finance component:', error)
-        // Use fallback data
-        const fallbackSummary = {
-          total_income: "20000",
-          total_expense: "5000",
-          current_balance: "15000"
-        }
+        console.error('Error fetching finance summary:', error)
 
-        setFinanceSummary(fallbackSummary)
-        console.log('Using fallback finance summary due to error:', fallbackSummary)
+        // Only use fallback data if explicitly enabled
+        if (USE_FALLBACK_DATA) {
+          const fallbackSummary = {
+            total_income: "20000",
+            total_expense: "5000",
+            current_balance: "15000"
+          }
+
+          setFinanceSummary(fallbackSummary)
+          console.log('Using fallback finance summary due to error:', fallbackSummary)
+        } else {
+          // Show real error state in the UI
+          setFinanceSummary({
+            total_income: "0",
+            total_expense: "0",
+            current_balance: "0"
+          })
+        }
       } finally {
         setIsLoading(false)
       }

@@ -2,12 +2,20 @@ import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } f
 import { mockMeetingMinutesApi } from './mock-api'
 
 // Base API configuration
-const API_BASE_URL = "https://backend-project-pemuda.onrender.com/api/v1"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://backend-project-pemuda.onrender.com/api/v1"
 const MAX_RETRIES = 3 // Meningkatkan jumlah percobaan dari 1 menjadi 3
 const RETRY_DELAY = 1000 // ms - Meningkatkan delay antar percobaan dari 500ms menjadi 1000ms
 
 // Flag to enable fallback data when API is unavailable
-export const USE_FALLBACK_DATA = false
+export const USE_FALLBACK_DATA = process.env.NEXT_PUBLIC_USE_FALLBACK_DATA === 'true' ? true : false
+
+// Log API configuration on startup
+console.log('API Configuration:', {
+  API_BASE_URL,
+  USE_FALLBACK_DATA,
+  MAX_RETRIES,
+  RETRY_DELAY
+})
 
 // Flag to track if we're using the mock API due to network issues
 let usingMockApi = false
@@ -475,17 +483,22 @@ export const eventApi = {
         })
       }
 
-      // If we have network errors, use fallback data
-      console.log('Using fallback events data due to API error')
+      // Only use fallback data if explicitly enabled
+      if (USE_FALLBACK_DATA) {
+        console.log('Using fallback events data due to API error')
 
-      // Sort fallback events by newest date first
-      const sortedEvents = [...fallbackEvents].sort((a, b) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime()
-      })
+        // Sort fallback events by newest date first
+        const sortedEvents = [...fallbackEvents].sort((a, b) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime()
+        })
 
-      const startIndex = (page - 1) * limit
-      const endIndex = startIndex + limit
-      return sortedEvents.slice(startIndex, endIndex)
+        const startIndex = (page - 1) * limit
+        const endIndex = startIndex + limit
+        return sortedEvents.slice(startIndex, endIndex)
+      }
+
+      // Otherwise, throw the error to be handled by the UI
+      throw error
     }
   },
 
@@ -913,9 +926,14 @@ export const financeApi = {
         console.error('Primitive error value:', String(safeError));
       }
 
-      // Return fallback data instead of throwing error to prevent app from crashing
-      console.warn('Returning fallback finance history data due to API error')
-      return fallbackFinanceHistory
+      // Only use fallback data if explicitly enabled
+      if (USE_FALLBACK_DATA) {
+        console.warn('Returning fallback finance history data due to API error')
+        return fallbackFinanceHistory
+      }
+
+      // Otherwise, throw the error to be handled by the UI
+      throw error
     }
   },
 
@@ -1886,12 +1904,13 @@ export const memberApi = {
       }
       console.error('Error fetching members:', error)
 
-      // Return fallback data if enabled
+      // Only use fallback data if explicitly enabled
       if (USE_FALLBACK_DATA) {
         console.log('Using fallback members data')
         return fallbackMembers
       }
 
+      // Otherwise, throw the error to be handled by the UI
       throw error
     }
   },
