@@ -1,10 +1,15 @@
 import { EventDetail } from "@/components/events/event-detail"
 
-export default function EventDetailsPage({ params }: { params: { id: string } }) {
+type EventPageParams = Promise<{ id: string }>
+
+export default async function EventDetailsPage({ params }: { params: EventPageParams }) {
+  // In Next.js 15, params is a Promise that needs to be awaited
+  const { id } = await params
+
   // In a real application, we would fetch the event data from the API
   // For now, we'll use mock data
   const mockEvent = {
-    id: parseInt(params.id),
+    id: parseInt(id),
     title: "Rapat Anggota Tahunan",
     description: "Rapat anggota tahunan untuk membahas program kerja dan evaluasi kegiatan.",
     date: "2025-04-15T10:00:00Z",
@@ -34,8 +39,8 @@ export default function EventDetailsPage({ params }: { params: { id: string } })
     <div className="container mx-auto py-6">
       <EventDetail
         event={mockEvent}
-        onEdit={() => console.log("Edit event", params.id)}
-        onDelete={() => console.log("Delete event", params.id)}
+        onEdit={() => console.log("Edit event", id)}
+        onDelete={() => console.log("Delete event", id)}
       />
     </div>
   )

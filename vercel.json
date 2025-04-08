@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npm run build:vercel",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "typescript": {
+    "ignoreBuildErrors": true
+  },
+  "eslint": {
+    "ignoreDuringBuilds": true
+  }
+}
